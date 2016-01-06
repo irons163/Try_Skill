@@ -36,23 +36,21 @@ public class ShooterWeapen extends WeapenSprite{
 //		initAttribute();
 	}
 	
+	protected void initAttribute() {
+		attribute = new Attribute();
+		
+		if(interval<=-1){
+			interval = new BigDecimal(3.0f / 1.0f).setScale(1,
+				BigDecimal.ROUND_HALF_UP).floatValue();
+		}
+		
+		attribute.setInterval(interval);
+		attributeHelper = new AttributeHelper(attribute);
+	}
+	
 	public void setBulletEnum(BulletEnum bulletEnum){
 		this.bulletEnum = bulletEnum;
 	}
-	
-//	@Override
-//	public boolean isInBattleRange(IEffectable battleable) {
-//		// TODO Auto-generated method stub
-//		
-////		for(Bullets bullets : bulletsList){
-////			Boolean isInBattleRange = bullets.isInBattleRange(battleable);
-////			if(isInBattleRange){
-////				bullets.attack(battleable);
-////			}
-////		}
-//		
-//		return super.isInBattleRange(battleable);
-//	}
 	
 	interface ShooterEventListener{
 		void willAttack(IEffectable battleableSprite);
@@ -104,29 +102,6 @@ public class ShooterWeapen extends WeapenSprite{
 		}
 		
 //		return isAtLeastOneTargetInBattleRange;
-	}
-	
-//	public void checkIfInBattleRangeThenAttack(List<EffectSprite> battleables){
-//		for(EffectSprite effectSprite : battleables){
-//			if(getSpriteDetectAreaHandler().detectByPoint(new PointF(effectSprite.getCenterX(), effectSprite.getCenterY()))){
-//				for(IEffect effect : effects){
-//					effectSprite.getAttributeInfo().addToEffectStatusList(effect.cloneEffect());
-//				}		
-//				break;
-//			}
-//		}
-//	}
-	
-	protected void initAttribute() {
-		attribute = new Attribute();
-		
-		if(interval<=-1){
-			interval = new BigDecimal(3.0f / 1.0f).setScale(1,
-				BigDecimal.ROUND_HALF_UP).floatValue();
-		}
-		
-		attribute.setInterval(interval);
-		attributeHelper = new AttributeHelper(attribute);
 	}
 	
 	@Override

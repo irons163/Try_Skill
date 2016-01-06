@@ -45,7 +45,7 @@ public class BulletsBuilder {
 //		bullet.setMoveRage(0, 0, CommonUtil.screenHeight,
 //				CommonUtil.screenWidth);
 		bullet.setType(0);
-		bullet.setWeapenEffect(new FrozenEffect());
+		bullet.addEffect(new FrozenEffect());
 		bullet.setBattleRange(100);
 		return bullet;
 	}

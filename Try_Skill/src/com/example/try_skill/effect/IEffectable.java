@@ -8,10 +8,6 @@ public interface IEffectable {
 	
 //	public boolean checkIfInBattleRangeThenAttack(List<IEffectable> battleables);
 	
-	public void beAttacked(Sprite weapenSprite);
-	
-	public void beAttacked(IEffect effect);
-	
 	public void doAttachedEffects();
 	
 	public void setBattleRange(float atkR);

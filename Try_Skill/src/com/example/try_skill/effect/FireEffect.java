@@ -51,6 +51,8 @@ public class FireEffect extends BaseEffect  {
 	public IEffect cloneEffect() {
 		// TODO Auto-generated method stub
 		IEffect effect = new FireEffect();
+		effect.setEffectListener(effectListener);
+		
 		if(getChild()!=null)
 			effect.setChild(getChild().cloneEffect());
 		return effect;

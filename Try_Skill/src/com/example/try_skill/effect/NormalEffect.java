@@ -34,6 +34,8 @@ public class NormalEffect extends BaseEffect{
 	public IEffect cloneEffect() {
 		// TODO Auto-generated method stub
 		IEffect effect = new NormalEffect(dmg);
+		effect.setEffectListener(effectListener);
+		
 		if(getChild()!=null)
 			effect.setChild(getChild().cloneEffect());
 		return effect;

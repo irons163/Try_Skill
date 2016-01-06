@@ -16,9 +16,7 @@ import com.example.try_skill.effect.IEffectable;
 import com.example.try_skill.util.Attribute;
 import com.example.try_skill.util.AttributeHelper;
 
-public class WeapenSprite extends EffectSprite implements IWeapen{
-//	protected IEffect effect;
-//	protected float atkR = 50;
+public class WeapenSprite extends EffectSprite{
 	protected AttributeInfo attributeInfo;
 	public static final float NO_ATK_RANGE = 0;
 	
@@ -37,10 +35,6 @@ public class WeapenSprite extends EffectSprite implements IWeapen{
 		super(x, y, autoAdd);
 		
 		this.interval = interval;
-		attributeInfo = new AttributeInfo();
-		attributeInfo.setAtk(10);
-		attributeInfo.setDef(5);
-		attributeInfo.setHp(20);
 		initAttribute();
 	}
 	
@@ -54,45 +48,6 @@ public class WeapenSprite extends EffectSprite implements IWeapen{
 		
 		attribute.setInterval(interval);
 		attributeHelper = new AttributeHelper(attribute);
-	}
-
-	@Override
-	public void setWeapenEffect(IEffect effect) {
-		// TODO Auto-generated method stub
-//		this.effect = effect;
-//		setEffectListener(this.effect);
-		
-		addWeapenEffect(effect);
-		
-	}
-	
-	protected void setEffectListener(IEffect effect) {
-		
-		effect.setEffectListener(new IEffect.EffectListener() {
-			
-//			@Override
-//			public void didEffect(BattleableSprite battleableSpriteByEffecten) {
-//				// TODO Auto-generated method stub
-//				int dmg = attributeInfo.getAtk() - battleableSpriteByEffecten.getAttributeInfo().getDef();
-//				if(dmg > 0){
-//					battleableSpriteByEffecten.getAttributeInfo().setHp(battleableSpriteByEffecten.getAttributeInfo().getHp() - dmg);
-//				}
-//			}
-
-			@Override
-			public void didEffect(IEffect effect) {
-				// TODO Auto-generated method stub
-				
-			}
-			
-		});
-	}
-
-	@Override
-	public IEffect getWeapenEffect() {
-		// TODO Auto-generated method stub
-//		return effect;
-		return null;
 	}
 	
 	public List<IEffect> getWeapenEffects() {
@@ -143,53 +98,6 @@ public class WeapenSprite extends EffectSprite implements IWeapen{
 //		attributeInfoNew.setAtk(attributeInfoNew.getAtk()+5);
 //		return attributeInfoNew;
 //	}	
-
-//	public boolean isHasATKRange(){
-//		if(atkR==NO_ATK_RANGE)
-//			return false;
-//		return true;
-//	}
-	
-	public interface NoATKRangeListener{
-		boolean isInNoATKBattleRange(IEffectable battleableSprite);
-		void attack(IEffectable battleableSprite);
-		void willDoEffect(IEffect effect, IEffectable battleableSprite);
-//		void attackFinish(BattleableSprite battleableSprite);
-	}
-	
-	NoATKRangeListener noATKRangeListener = new NoATKRangeListener() {
-		
-		@Override
-		public boolean isInNoATKBattleRange(IEffectable battleableSprite) {
-			// TODO Auto-generated method stub
-			new RuntimeException();
-			return false;
-		}
-
-		@Override
-		public void attack(IEffectable battleableSprite) {
-			// TODO Auto-generated method stub
-			new RuntimeException();
-		}
-		
-		@Override
-		public void willDoEffect(IEffect effect, IEffectable battleableSprite) {
-			// TODO Auto-generated method stub
-			new RuntimeException();
-		}
-		
-//		@Override
-//		public void attackFinish(BattleableSprite battleableSprite) {
-//			// TODO Auto-generated method stub
-//			new RuntimeException();
-//		}
-	};
-	
-	public void setNoATKRangeListener(NoATKRangeListener noATKRangeListener){
-		this.noATKRangeListener = noATKRangeListener;
-	}
-	
-//	HashMap<String, IEffect> effects = new HashMap<String, IEffect>();
 	
 	public void addWeapenEffect(String key, IEffect effect){
 		effects.add(effect);
@@ -199,22 +107,6 @@ public class WeapenSprite extends EffectSprite implements IWeapen{
 	public void addWeapenEffect(IEffect effect){
 		effects.add(effect);
 //		effects.put(key, effect);
-	}
-	
-//	public void setWeapenEffectByKey(String key){
-//		setWeapenEffect(effects.get(key));
-//	}
-
-	@Override
-	public void beAttacked(Sprite weapenSprite) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void beAttacked(IEffect effect) {
-		// TODO Auto-generated method stub
-		
 	}
 
 	@Override

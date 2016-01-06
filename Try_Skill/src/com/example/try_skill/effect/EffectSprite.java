@@ -11,9 +11,6 @@ import com.example.try_gameengine.utils.DetectAreaRound;
 import com.example.try_gameengine.utils.SpriteDetectAreaHandler;
 
 public class EffectSprite extends Sprite implements IEffectable{
-//	protected float battleRange = 50.0f;
-//	protected float battleInviable = 1.0f;
-//	protected Sprite weapenSprite;
 	private AttributeInfo attributeInfo;
 	protected boolean isNeedRemove = false;
 	protected boolean isBattleable = true;
@@ -43,8 +40,6 @@ public class EffectSprite extends Sprite implements IEffectable{
 		spriteDetectAreaHandler.addSuccessorDetectArea(new DetectAreaRound(new PointF(getCenterX(), getCenterY()), 100));
 		spriteDetectAreaHandler.apply();
 		setSpriteDetectAreaHandler(spriteDetectAreaHandler);
-		
-//		effects.addAll(EffectFactory.createFrozenDmgEffect());
 	}
 	
 	public void addEffect(IEffect effect){
@@ -63,29 +58,18 @@ public class EffectSprite extends Sprite implements IEffectable{
 		this.effects.removeAll(effects);
 	}
 	
-//	public boolean checkIfInBattleRangeThenAttack(
-//			List<IEffectable> battleablesSelf, List<IEffectable> battleablesEnemy) {
-//		boolean wasAttacked = checkIfInBattleRangeThenAttack(battleablesSelf);
-//		if(!wasAttacked)
-//			wasAttacked = checkIfInBattleRangeThenAttack(battleablesEnemy);
-//		
-//		return wasAttacked;
-//	}
-	
-//	@Override
-//	public boolean checkIfInBattleRangeThenAttack(
-//			List<IEffectable> battleables) {
-//		// TODO Auto-generated method stub
-//		if(!isBattleable())
-//			return false;
-//			
-//		if(weapenSprite!=null)
-//			return weapenSprite.checkIfInBattleRangeThenAttack(battleables);
-//
-//		return false;
-//	}
+	protected void setEffectListener(IEffect effect) {
+		
+		effect.setEffectListener(new IEffect.EffectListener() {
 
-	
+			@Override
+			public void didEffect(IEffect effect) {
+				// TODO Auto-generated method stub
+				
+			}
+			
+		});
+	}
 	
 	public void checkIfInBattleRangeThenAttack(List<EffectSprite> battleables){
 		for(EffectSprite effectSprite : battleables){
@@ -105,14 +89,6 @@ public class EffectSprite extends Sprite implements IEffectable{
 	public void setIsBattleable(boolean isBattleable){
 		this.isBattleable = isBattleable;
 	}
-
-//	public float getSpeed(){
-//		return battleInviable;
-//	}
-//	
-//	public void setSpeed(float speeed){
-//		battleInviable = speeed;
-//	}
 	
 	@Override
 	public AttributeInfo getAttributeInfo(){
@@ -122,27 +98,17 @@ public class EffectSprite extends Sprite implements IEffectable{
 	public boolean isNeedRemove(){
 		return isNeedRemove;
 	}
-	
-	@Override
-	public void beAttacked(Sprite weapenSprite) {
-		// TODO Auto-generated method stub
-		
-	}
 
 	@Override
-	public void setBattleRange(float atkR) {
+	public void setBattleRange(float battleRange) {
 		// TODO Auto-generated method stub
-		
+		this.battleRange = battleRange;
 	}
 
 	@Override
 	public AttributeInfo getNewAttributeInfo(AttributeInfo attributeInfo) {
 		// TODO Auto-generated method stub
 		return null;
-	}
-
-	private void doEffectTo(IEffectable effectable, IEffect effect){
-		effectable.beAttacked(effect);
 	}
 
 	private void doEffectSelf(){
@@ -155,14 +121,6 @@ public class EffectSprite extends Sprite implements IEffectable{
 		}
 		
 		getAttributeInfo().removeFromEffectStatusList(this, removeEffects);
-	}
-	
-	@Override
-	public void beAttacked(IEffect effect) {
-		// TODO Auto-generated method stub
-		if(!getAttributeInfo().checkHasEffectOrNotByEffectType(effect.getType())){
-			getAttributeInfo().addToEffectStatusList(effect);
-		}
 	}
 
 	@Override
