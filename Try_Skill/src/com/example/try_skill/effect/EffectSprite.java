@@ -156,6 +156,9 @@ public class EffectSprite extends Sprite implements IEffectable{
 	public void setBattleRange(float battleRange) {
 		// TODO Auto-generated method stub
 		this.battleRange = battleRange;
+		getSpriteDetectAreaHandler().reset();
+		getSpriteDetectAreaHandler().addSuccessorDetectArea(new DetectAreaRound(new PointF(getCenterX(), getCenterY()), battleRange));
+		getSpriteDetectAreaHandler().apply();
 	}
 	
 	public float getEffectSpreadRange() {

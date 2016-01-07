@@ -69,6 +69,7 @@ public class DefenerBuilder {
 		meleeWeapen.addEffect(new FireEffect());
 
 		defener.setWeapen(meleeWeapen);
+		defener.setBattleRange(300);
 		return defener;
 	}
 	

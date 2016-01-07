@@ -50,15 +50,6 @@ public class WeapenSprite extends EffectSprite{
 		attributeHelper = new AttributeHelper(attribute);
 	}
 
-	@Override
-	public void setBattleRange(float battleRange) {
-		// TODO Auto-generated method stub
-		this.battleRange = battleRange;
-		getSpriteDetectAreaHandler().reset();
-		getSpriteDetectAreaHandler().addSuccessorDetectArea(new DetectAreaRound(new PointF(getCenterX(), getCenterY()), battleRange));
-		getSpriteDetectAreaHandler().apply();
-	}
-
 //	@Override
 //	public AttributeInfo getNewAttributeInfo(AttributeInfo attributeInfo) {
 //		// TODO Auto-generated method stub
