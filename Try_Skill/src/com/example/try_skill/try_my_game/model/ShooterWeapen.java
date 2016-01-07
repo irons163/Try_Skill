@@ -26,16 +26,15 @@ public class ShooterWeapen extends WeapenSprite{
 		super(x, y, autoAdd);
 		// TODO Auto-generated constructor stub
 		this.context = context;
-//		initAttribute();
 	}
 	
 	public ShooterWeapen(Context context, float x, float y, boolean autoAdd, float interval) {
 		super(x, y, autoAdd, interval);
 		// TODO Auto-generated constructor stub
 		this.context = context;
-//		initAttribute();
 	}
 	
+	@Override
 	protected void initAttribute() {
 		attribute = new Attribute();
 		
@@ -65,17 +64,12 @@ public class ShooterWeapen extends WeapenSprite{
 	@Override
 	public void attack(IEffectable battleable) {
 		// TODO Auto-generated method stub
-//		for(Bullets bullets : bulletsList){
-//			bullets.attack(battleable);
-//		}
-		
 		long currentTime = System.currentTimeMillis();
 		if (!attributeHelper.isCanShoot(lastShootTime, currentTime)) {
 			return;
 		}
 		
 		lastShootTime = currentTime;
-		
 //		final BaseBullet bullets = BulletsBuilder.createFrozenBullets(context, getX(), getY());
 		final BaseBullet bullets = BulletsBuilder.createBulletByBulletEnum(bulletEnum, context, getX(), getY());
 		bullets.setBulletsEventListener(new BaseBullet.BulletsEventListener() {
@@ -100,8 +94,6 @@ public class ShooterWeapen extends WeapenSprite{
 		for(BaseBullet bullets : bulletsList){
 			bullets.checkIfInBattleRangeThenAttack(battleables);
 		}
-		
-//		return isAtLeastOneTargetInBattleRange;
 	}
 	
 	@Override

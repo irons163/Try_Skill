@@ -49,38 +49,6 @@ public class WeapenSprite extends EffectSprite{
 		attribute.setInterval(interval);
 		attributeHelper = new AttributeHelper(attribute);
 	}
-	
-	public List<IEffect> getWeapenEffects() {
-		// TODO Auto-generated method stub
-		return effects;
-	}
-
-	protected boolean isInBattleRange(EffectSprite effectSprite) {
-		return getSpriteDetectAreaHandler().detectByPoint(new PointF(effectSprite.getCenterX(), effectSprite.getCenterY()));
-	}
-
-	protected void attack(IEffectable effectSprite) {
-		// TODO Auto-generated method stub
-		for(IEffect effect : effects){
-			effectSprite.getAttributeInfo().addToEffectStatusList(effect.cloneEffect());
-		}
-	}
-	
-	@Override
-	public void checkIfInBattleRangeThenAttack(
-			List<EffectSprite> battleables) {
-		// TODO Auto-generated method stub
-		
-		boolean isAtLeastOneTargetInBattleRange = false;
-		for(EffectSprite battleableSprite : battleables){
-			boolean isInBattleRange = isInBattleRange(battleableSprite);
-			if(isInBattleRange){ 
-				attack(battleableSprite);
-				isAtLeastOneTargetInBattleRange = true;
-			}
-		}
-//		return isAtLeastOneTargetInBattleRange;
-	}
 
 	@Override
 	public void setBattleRange(float battleRange) {

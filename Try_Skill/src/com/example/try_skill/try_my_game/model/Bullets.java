@@ -133,111 +133,112 @@ enum HandAnimaton {
 	}
 
 	private void initMove() {
-		final ScriptPaser scriptPaser = new ScriptPaser();
-		scriptPaser.paser(context, this, handScriteNames[type_direction]);
-		
-		scriptPaser.setScriptTriggerDoCommandLisener(new ScriptPaser.ScriptTriggerDoCommandLisener() {
-			
-			@Override
-			public void onCommandPause() {
-				// TODO Auto-generated method stub
-				
-			}
-			
-			@Override
-			public void onCommandMove(float dx, float dy) {
-				// TODO Auto-generated method stub
-				if(!isMoveable)
-					return;
-				if(scriptPaser.isMove()){
-					dx = scriptPaser.getDx();
-					Log.e("script dx", dx+"");
-					if(scriptPaser.getDx()>0){
-						if(getX()+w >= moveRage.right){
-							scriptPaser.setDx(-scriptPaser.getDx());
-						}
-					}else{
-						if(getX() <= moveRage.left){
-							scriptPaser.setDx(-scriptPaser.getDx());
-						}
-					}
-				}
-				
-				dx = scriptPaser.getDx();
-				
-				
-				Bullets.this.move(dx, dy);
-			}
-		});
-		
-
-		
-		movementAction = new MovementActionSetWithThreadPool();
-		movementAction.setMovementActionController(new MovementAtionController());
-		MovementActionInfo info = new MovementActionInfo(2000, 1, 0, 4.0f, "", null, false, this, HandAnimaton.Move.getName());
-		MovementActionItemBaseReugularFPS action = new MovementActionItemBaseReugularFPS(info);
-		movementAction.addMovementAction(action);
-		
-		movementAction.isLoop = true;
-		
-		movementAction.setTimerOnTickListener(new MovementAction.TimerOnTickListener() {
-			
-			@Override
-			public void onTick(float dx, float dy) {
-				// TODO Auto-generated method stub
-				if(!isMoveable)
-					return;
-				float bottom = Bullets.this.getY()+h;
-				float top = Bullets.this.getY();
-				Log.e("hand bottom", bottom + "");
-				
-//				if(type_direction == TYPE_TWO_HAND_LEFT_UP || type_direction == TYPE_TWO_HAND_RIGHT_UP)
-//					dy *= -1;
-				
-				
-				
-				if(type==Top){
-					dy = -dy;
-				}
-				
-				if( (bottom >= limit && type==Down) || (top <= limit && type==Top)){
+//		final ScriptPaser scriptPaser = new ScriptPaser();
+//		scriptPaser.paser(context, this, handScriteNames[type_direction]);
+//		
+//		scriptPaser.setScriptTriggerDoCommandLisener(new ScriptPaser.ScriptTriggerDoCommandLisener() {
+//			
+//			@Override
+//			public void onCommandPause() {
+//				// TODO Auto-generated method stub
+//				
+//			}
+//			
+//			@Override
+//			public void onCommandMove(float dx, float dy) {
+//				// TODO Auto-generated method stub
+//				if(!isMoveable)
+//					return;
+//				if(scriptPaser.isMove()){
+//					dx = scriptPaser.getDx();
+//					Log.e("script dx", dx+"");
+//					if(scriptPaser.getDx()>0){
+//						if(getX()+w >= moveRage.right){
+//							scriptPaser.setDx(-scriptPaser.getDx());
+//						}
+//					}else{
+//						if(getX() <= moveRage.left){
+//							scriptPaser.setDx(-scriptPaser.getDx());
+//						}
+//					}
+//				}
+//				
+//				dx = scriptPaser.getDx();
+//				
+//				
+//				Bullets.this.move(dx, dy);
+//			}
+//		});
+//		
+//
+//		
+//		movementAction = new MovementActionSetWithThreadPool();
+//		movementAction.setMovementActionController(new MovementAtionController());
+//		MovementActionInfo info = new MovementActionInfo(2000, 1, 0, 4.0f, "", null, false, this, HandAnimaton.Move.getName());
+//		MovementActionItemBaseReugularFPS action = new MovementActionItemBaseReugularFPS(info);
+//		movementAction.addMovementAction(action);
+//		
+//		movementAction.isLoop = true;
+//		
+//		movementAction.setTimerOnTickListener(new MovementAction.TimerOnTickListener() {
+//			
+//			@Override
+//			public void onTick(float dx, float dy) {
+//				// TODO Auto-generated method stub
+//				if(!isMoveable)
+//					return;
+//				float bottom = Bullets.this.getY()+h;
+//				float top = Bullets.this.getY();
+//				Log.e("hand bottom", bottom + "");
+//				
+////				if(type_direction == TYPE_TWO_HAND_LEFT_UP || type_direction == TYPE_TWO_HAND_RIGHT_UP)
+////					dy *= -1;
+//				
+//				
+//				
+//				if(type==Top){
 //					dy = -dy;
-//					if(type==Down || (type==Top &&( type_direction == TYPE_TWO_HAND_LEFT_UP || type_direction == TYPE_TWO_HAND_RIGHT_UP))){
-					if(type==Down){
-							type=Top;
-						if(reflectCounter==stopRlectCount){
-							limit = moveRage.height() - moveRage.height()*Math.pow(0.66d, reflectCounter);
-						}else{
-							reflectCounter++;
-							limit = moveRage.height() - moveRage.height()*Math.pow(0.66d, reflectCounter);
-						}
-							
-						drawWithoutClip = true;
-						isMoveable = false;
-						
-					}else{
-						type=Down;
-						limit = moveRage.bottom;
-					}
-					
-				}
-				
-				
-				move(dx, dy);
-				
-			}
-		});
-		
-		movementAction.initMovementAction();
-		
-		movementAction.start();
-		
-//		setMovementAction(movementAction);
+//				}
+//				
+//				if( (bottom >= limit && type==Down) || (top <= limit && type==Top)){
+////					dy = -dy;
+////					if(type==Down || (type==Top &&( type_direction == TYPE_TWO_HAND_LEFT_UP || type_direction == TYPE_TWO_HAND_RIGHT_UP))){
+//					if(type==Down){
+//							type=Top;
+//						if(reflectCounter==stopRlectCount){
+//							limit = moveRage.height() - moveRage.height()*Math.pow(0.66d, reflectCounter);
+//						}else{
+//							reflectCounter++;
+//							limit = moveRage.height() - moveRage.height()*Math.pow(0.66d, reflectCounter);
+//						}
+//							
+//						drawWithoutClip = true;
+//						isMoveable = false;
+//						
+//					}else{
+//						type=Down;
+//						limit = moveRage.bottom;
+//					}
+//					
+//				}
+//				
+//				
+//				move(dx, dy);
+//				
+//			}
+//		});
+//		
+//		movementAction.initMovementAction();
+//		
+//		movementAction.start();
+//		
+////		setMovementAction(movementAction);
 		
 		
 		
 		movementActionShoot = new MovementActionSetWithThreadPool();
-		info = new MovementActionInfo(2000, 1, 2, 0, "", null, false);
+		movementActionShoot.setMovementActionController(new MovementAtionController());
+		MovementActionInfo info = new MovementActionInfo(2000, 1, 2, 0, "", null, false);
 		MovementActionItemBaseReugularFPS reFlectaction = new MovementActionItemBaseReugularFPS(info);
 		movementActionShoot.addMovementAction(reFlectaction);
 		
@@ -300,132 +301,6 @@ MyGameModel ballView;
 EffectUtil effectUtil;
 int whichBrickType;
 private float angle;
-
-public void set(int playGameLevel, MyGameModel ballView) {
-	this.ballView = ballView;
-//	rect.set(left, top, right, bottom);
-//	this.left = left;
-//	this.top = top;
-//	this.right = right;
-//	this.bottom = bottom;
-	Random random = new Random();
-	// 10��
-	// if(playGameLevel == 0 || playGameLevel ==1)
-	// whichBrickType = random.nextInt(1);
-	// else if(playGameLevel == 2 || playGameLevel ==3){
-	// int temp = random.nextInt(3);
-	// if(temp ==0){
-	// whichBrickType = 5;
-	// }else if(temp ==1){
-	// whichBrickType = 5;
-	// }else {
-	// whichBrickType = 5;
-	// }
-	// }else if(playGameLevel == 4 || playGameLevel ==5){
-	// int temp = random.nextInt(4);
-	// if(temp ==0){
-	// whichBrickType = 2;
-	// }else if(temp ==1){
-	// whichBrickType = 3;
-	// }else if(temp ==2){
-	// whichBrickType = 5;
-	// }else {
-	// whichBrickType = 6;
-	// }
-	// }else if(playGameLevel == 6 || playGameLevel ==7){
-	// int temp = random.nextInt(6);
-	// if(temp ==0){
-	// whichBrickType = 0;
-	// }else if(temp ==1){
-	// whichBrickType = 1;
-	// }else if(temp ==2){
-	// whichBrickType = 2;
-	// }else if(temp ==3){
-	// whichBrickType = 4;
-	// }else if(temp ==4){
-	// whichBrickType = 5;
-	// }else {
-	// whichBrickType = 6;
-	// }
-	// }else if(playGameLevel == 8 || playGameLevel ==9){
-	// whichBrickType = random.nextInt(7);
-	// }
-
-//	do {
-//		// 5��
-//		if (playGameLevel == 0)
-//			whichBrickType = Brick_Once;
-//		else if (playGameLevel == 1) {
-//			int temp = random.nextInt(3);
-//			if (temp == 0) {
-//				whichBrickType = Brick_Twice;
-//			} else if (temp == 1) {
-//				whichBrickType = Brick_Tool;
-//			} else {
-//				whichBrickType = Brick_BallLevelUP;
-//			}
-//		} else if (playGameLevel == 2) {
-//			int temp = random.nextInt(4);
-//			if (temp == 0) {
-//				whichBrickType = Brick_Three;
-//			} else if (temp == 1) {
-//				whichBrickType = Brick_Iron;
-//			} else if (temp == 2) {
-//				whichBrickType = Brick_Tool;
-//			} else {
-//				whichBrickType = Brick_BallLevelUP;
-//			}
-//		} else if (playGameLevel == 3) {
-//			int temp = random.nextInt(5);
-//			if (temp == 0) {
-//				whichBrickType = Brick_Twice;
-//			} else if (temp == 1) {
-//				whichBrickType = Brick_Three;
-//			} else if (temp == 2) {
-//				whichBrickType = Brick_Time;
-//			} else if (temp == 3) {
-//				whichBrickType = Brick_Tool;
-//			} else {
-//				whichBrickType = Brick_BallLevelUP;
-//			}
-//		} else if (playGameLevel == 4) {
-//			int temp = random.nextInt(6);
-//			if (temp == 0) {
-//				whichBrickType = Brick_Twice;
-//			} else if (temp == 1) {
-//				whichBrickType = Brick_Three;
-//			} else if (temp == 2) {
-//				whichBrickType = Brick_Iron;
-//			} else if (temp == 3) {
-//				whichBrickType = Brick_Time;
-//			} else if (temp == 4) {
-//				whichBrickType = Brick_Tool;
-//			} else {
-//				whichBrickType = Brick_BallLevelUP;
-//			}
-//		}
-//	} while (BrickMaxConfig.isBrickMaxConfigEnable()
-//			&& BrickMaxConfig.isBrickOverMax(whichBrickType));
-	
-	int temp = random.nextInt(6);
-	if (temp == 0) {
-		whichBrickType = Brick_Twice;
-	} else if (temp == 1) {
-		whichBrickType = Brick_Three;
-	} else if (temp == 2) {
-//		whichBrickType = Brick_Iron;
-//		whichBrickType = Brick_Once;
-		
-	} else if (temp == 3) {
-		whichBrickType = Brick_Time;
-	} else if (temp == 4) {
-		whichBrickType = Brick_Tool;
-	} else {
-		whichBrickType = Brick_BallLevelUP;
-	}
-	setBitmapByBrickType(whichBrickType);
-	setEffect(whichBrickType);
-}
 
 public void setType(int type){
 	if (type == 0) {

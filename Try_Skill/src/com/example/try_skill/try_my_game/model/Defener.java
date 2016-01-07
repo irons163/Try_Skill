@@ -34,59 +34,42 @@ public class Defener extends EffectSprite{
 	boolean isInvincible = false;
 	
 	private EffectSprite weapenSprite;
+	private AttackType attackType;
 	
-	enum SheepMove {
+	public enum AttackType {
 
 		Shoot(
-				"Shoot",
-				new Bitmap[] {
-						
-						BitmapUtil.hamster,
-						BitmapUtil.hamsterShoot,
-						BitmapUtil.hamsterShoot2
-				}),
-				
-		Move(
-		"RABIT_MOVE",
-		new Bitmap[] {
-				
-				BitmapUtil.hamster,
-				BitmapUtil.hamsterShoot,
-				BitmapUtil.hamsterShoot2
-		}),
-		Injure(
-				"Injure",
-				new Bitmap[] {
-						
-						BitmapUtil.hamster_injure
-				}),		
+		"Shoot",
+		new int[]{0,10,0,1}),		
+		Melee(
+		"Melee",
+		new int[]{0,10,11,1}),	
 		;
 
 		String name;
-		Bitmap[] bitmaps;
+		int[] sequence;
 
-		private SheepMove(String name, Bitmap[] bitmaps) {
+		private AttackType(String name, int[] sequenceForAnimation) {
 			this.name = name;
-			this.bitmaps = bitmaps;
+			this.sequence = sequenceForAnimation;
 		}
 
 		public String getName() {
 			return name;
 		}
 
-		public Bitmap[] getBitmaps() {
-			return bitmaps;
+		public int[] getSequence() {
+			return sequence;
 		}
 	}
 	
-	public Defener(float x, float y, boolean autoAdd) {
+	public Defener(float x, float y, boolean autoAdd, AttackType attackType) {
 		super(x, y, autoAdd);
-		// TODO Auto-generated constructor stub
-//		setBitmapAndFrameWH(bitmap, frameWidth, frameHeight);
+		this.attackType = attackType;
 		
 		setBitmapAndFrameWH(BitmapUtil.hamster, BitmapUtil.hamster.getWidth()/7, BitmapUtil.hamster.getHeight()/2);
 		
-		addActionFPSFrame(SheepMove.Shoot.getName(), new int[]{0,10,0,1}, BattleUtil.changeToNew(new int[]{0,5,5,5}, getAttributeInfo().getBattleInviable()), true, new IActionListener() {
+		addActionFPSFrame(attackType.getName(), attackType.getSequence(), BattleUtil.changeToNew(new int[]{0,5,5,5}, getAttributeInfo().getBattleInviable()), true, new IActionListener() {
 			
 			@Override
 			public void beforeChangeFrame(int nextFrameId) {
@@ -97,8 +80,6 @@ public class Defener extends EffectSprite{
 			@Override
 			public void afterChangeFrame(int periousFrameId) {
 				// TODO Auto-generated method stub
-//				if(periousFrameId==1)
-//					isShooting = false;
 			}
 			
 			@Override
@@ -108,7 +89,7 @@ public class Defener extends EffectSprite{
 			}
 		});
 		
-		setAction(SheepMove.Shoot.getName());
+		setAction(attackType.getName());
 		
 		initCollisiontRectF();
 	}
@@ -172,7 +153,7 @@ public class Defener extends EffectSprite{
 			bullets.add(bullet);
 		}
 
-		setAction(SheepMove.Shoot.getName());
+		setAction(attackType.getName());
 	}
 	
 	@Override

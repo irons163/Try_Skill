@@ -5,9 +5,12 @@ import android.graphics.RectF;
 import android.util.Log;
 
 import com.example.try_skill.effect.EffectSprite;
+import com.example.try_skill.effect.FireEffect;
 import com.example.try_skill.effect.IEffect;
 import com.example.try_skill.effect.IEffectable;
+import com.example.try_skill.effect.NormalEffect;
 import com.example.try_skill.try_my_game.model.BulletsBuilder.BulletEnum;
+import com.example.try_skill.try_my_game.model.Defener.AttackType;
 import com.example.try_skill.util.CommonUtil;
 
 public class DefenerBuilder {
@@ -20,7 +23,7 @@ public class DefenerBuilder {
 			defener = createHamster1(context, x, y);
 			break;
 		case 1:
-//			defener = createHamster2(context, x, y);
+			defener = createHamster2(context, x, y);
 			break;
 		case 2:
 			defener = createHamster3(context, x, y);
@@ -32,7 +35,7 @@ public class DefenerBuilder {
 			defener = createHamster5(context, x, y);
 			break;
 		case 5:
-//			defener = createHamster6(context, x, y);
+			defener = createHamster6(context, x, y);
 			break;
 		}
 		
@@ -40,7 +43,7 @@ public class DefenerBuilder {
 	}
 	
 	public static Defener createHamster1(Context context, float x, float y){
-		final Defener defener = new Defener(x, y, true);
+		final Defener defener = new Defener(x, y, true, AttackType.Shoot);
 		
 		ShooterWeapen shooterWeapen = new ShooterWeapen(context, x, y, false);
 		shooterWeapen.setBulletEnum(BulletEnum.FrozenBullets);
@@ -57,63 +60,20 @@ public class DefenerBuilder {
 		return defener;
 	}
 	
-//	public static Defener createHamster2(Context context, float x, float y){
-////		Defener defener = new Defener(x, y, false);
-////		Bullets bullet = new Bullets(context, x, y, false, 0);
-////		bullet.setMoveRage(0, 0, CommonUtil.screenHeight,
-////				CommonUtil.screenWidth);
-////		bullet.setType(1);
-////		defener.setWeapen(bullet);
-////		return defener;
-//		
-//		final Defener defener = new Defener(x, y, true);
-//		
-//		final RangeMeleeWeapon shooterWeapen = new RangeMeleeWeapon(context, x, y, false, 0);
-//		shooterWeapen.setBattleRange(WeapenSprite.NO_ATK_RANGE);
-//		shooterWeapen.setWeapenEffect(new FireEffect());
-//		shooterWeapen.setNoATKRangeListener(new MeleeWeapon.NoATKRangeListener() {
-//
-//			@Override
-//			public boolean isInNoATKBattleRange(
-//					BattleableSprite battleableSprite) {
-//				// TODO Auto-generated method stub
-////				boolean isCollision = defener.getCollisionRectF().intersect(battleableSprite.getCollisionRectF());
-//				
-//				boolean isCollision = RectF.intersects(defener.getCollisionRectF(), battleableSprite.getCollisionRectF());
-//				
-////				if(isCollision)
-//					Log.e("isCollision", "isCollision:"+isCollision);
-//				return isCollision;
-//			}
-//
-//			@Override
-//			public void attack(BattleableSprite battleableSprite) {
-//				// TODO Auto-generated method stub
-////				shooterWeapen.attack(battleableSprite);
-//			}
-//
-//			@Override
-//			public void willDoEffect(IEffect effect,
-//					BattleableSprite battleableSprite) {
-//				// TODO Auto-generated method stub
-//				
-//			}
-//		});
-//		
-////		shooterWeapen.setShooterEventListener(new ShooterWeapen.ShooterEventListener() {
-////			
-////			@Override
-////			public void willAttack(BattleableSprite battleableSprite) {
-////				// TODO Auto-generated method stub
-//////				defener.attack(battleableSprite);
-////			}
-////		});
-//		defener.setWeapen(shooterWeapen);
-//		return defener;
-//	}
+	public static Defener createHamster2(Context context, float x, float y){
+		final Defener defener = new Defener(x, y, true, AttackType.Melee);
+		
+		final WeapenSprite meleeWeapen = new WeapenSprite(x, y, false, 0);
+		meleeWeapen.setBattleRange(defener.getSpriteDetectAreaHandler());
+		meleeWeapen.setAttackTargeCounttMaxLimit(WeapenSprite.UNLIMIT_ATTACK_TARGET_COUNT);
+		meleeWeapen.addEffect(new FireEffect());
+
+		defener.setWeapen(meleeWeapen);
+		return defener;
+	}
 	
 	public static Defener createHamster3(Context context, float x, float y){
-		final Defener defener = new Defener(x, y, true);
+		final Defener defener = new Defener(x, y, true, AttackType.Shoot);
 		
 		ShooterWeapen shooterWeapen = new ShooterWeapen(context, x, y, false);
 		shooterWeapen.setBulletEnum(BulletEnum.NormalBullets);
@@ -131,7 +91,7 @@ public class DefenerBuilder {
 	}
 	
 	public static Defener createHamster4(Context context, float x, float y){
-		final Defener defener = new Defener(x, y, true);
+		final Defener defener = new Defener(x, y, true, AttackType.Shoot);
 		
 		ShooterWeapen shooterWeapen = new ShooterWeapen(context, x, y, false);
 		shooterWeapen.setBulletEnum(BulletEnum.StunBullets);
@@ -149,7 +109,7 @@ public class DefenerBuilder {
 	}
 	
 	public static Defener createHamster5(Context context, float x, float y){
-		final Defener defener = new Defener(x, y, true);
+		final Defener defener = new Defener(x, y, true, AttackType.Shoot);
 		
 		ShooterWeapen shooterWeapen = new ShooterWeapen(context, x, y, false);
 		shooterWeapen.setBulletEnum(BulletEnum.RangeNormalBullets);
@@ -166,44 +126,16 @@ public class DefenerBuilder {
 		return defener;
 	}
 	
-//	public static Defener2 createHamster6(Context context, float x, float y){
-//		final Defener2 defener = new Defener2(x, y, true);
-//		
-//		final MeleeWeapon shooterWeapen = new MeleeWeapon(context, x, y, false);
-////		shooterWeapen.setBulletEnum(BulletEnum.RangeNormalBullets);
-//		shooterWeapen.setBattleRange(WeapenSprite.NO_ATK_RANGE);
-//		shooterWeapen.setWeapenEffect(new NormalEffect());
-//		shooterWeapen.setNoATKRangeListener(new MeleeWeapon.NoATKRangeListener() {
-//
-//			@Override
-//			public boolean isInNoATKBattleRange(
-//					BattleableSprite battleableSprite) {
-//				// TODO Auto-generated method stub
-////				boolean isCollision = defener.getCollisionRectF().intersect(battleableSprite.getCollisionRectF());
-//				
-//				boolean isCollision = RectF.intersects(defener.getCollisionRectF(), battleableSprite.getCollisionRectF());
-//				
-////				if(isCollision)
-//					Log.e("isCollision", "isCollision:"+isCollision);
-//				return isCollision;
-//			}
-//
-//			@Override
-//			public void attack(BattleableSprite battleableSprite) {
-//				// TODO Auto-generated method stub
-////				shooterWeapen.attack(battleableSprite);
-//				defener.setAtkAction();
-//			}
-//
-//			@Override
-//			public void willDoEffect(IEffect effect,
-//					BattleableSprite battleableSprite) {
-//				// TODO Auto-generated method stub
-//				
-//			}
-//		});
-//		
-//		defener.setWeapen(shooterWeapen);
-//		return defener;
-//	}
+	public static Defener createHamster6(Context context, float x, float y){
+		final Defener defener = new Defener(x, y, true, AttackType.Melee);
+		
+		final WeapenSprite meleeWeapen = new WeapenSprite(x, y, false);
+//		shooterWeapen.setBulletEnum(BulletEnum.RangeNormalBullets);
+//		meleeWeapen.setBattleRange(WeapenSprite.NO_ATK_RANGE);
+		meleeWeapen.addEffect(new NormalEffect(20));
+		meleeWeapen.setBattleRange(defener.getSpriteDetectAreaHandler());
+		
+		defener.setWeapen(meleeWeapen);
+		return defener;
+	}
 }

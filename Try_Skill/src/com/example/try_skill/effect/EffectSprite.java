@@ -7,16 +7,22 @@ import android.graphics.Bitmap;
 import android.graphics.PointF;
 
 import com.example.try_gameengine.framework.Sprite;
+import com.example.try_gameengine.utils.DetectArea;
 import com.example.try_gameengine.utils.DetectAreaRound;
 import com.example.try_gameengine.utils.SpriteDetectAreaHandler;
 
 public class EffectSprite extends Sprite implements IEffectable{
+	public static final int UNLIMIT_ATTACK_TARGET_COUNT = Integer.MAX_VALUE;
 	private AttributeInfo attributeInfo;
 	protected boolean isNeedRemove = false;
 	protected boolean isBattleable = true;
 	protected float battleRange = 100f;
+	protected int attackTargeCounttMaxLimit = 1;
+//	protected boolean isSpreadEffect;
+	protected float effectSpreadRange;
 	
-	protected List<IEffect> effects = new ArrayList<IEffect>();
+	protected List<IEffect> effects = new ArrayList<IEffect>(); // main effects.
+	protected List<IEffect> spreadEffects = new ArrayList<IEffect>(); // spread effects, if size=0, use main effects for spread.
 	
 	public EffectSprite(Bitmap bitmap, int w, int h, boolean autoAdd) {
 		super(bitmap, w, h, autoAdd);
@@ -71,15 +77,62 @@ public class EffectSprite extends Sprite implements IEffectable{
 		});
 	}
 	
+	protected void attack(IEffectable effectSprite) {
+		// TODO Auto-generated method stub
+		for(IEffect effect : effects){
+			effectSprite.getAttributeInfo().addToEffectStatusList(effect.cloneEffect());
+		}
+	}
+	
 	public void checkIfInBattleRangeThenAttack(List<EffectSprite> battleables){
+		List<EffectSprite> effectSpritesByAttecked = null;
+		boolean isAtLeastOneTargetInBattleRange = false;
+		int attackCount = 0;
 		for(EffectSprite effectSprite : battleables){
-			if(getSpriteDetectAreaHandler().detectByPoint(new PointF(effectSprite.getCenterX(), effectSprite.getCenterY()))){
-				for(IEffect effect : effects){
-					effectSprite.getAttributeInfo().addToEffectStatusList(effect.cloneEffect());
-				}		
-				break;
+			if(isInBattleRange(effectSprite)){
+				attack(effectSprite);	
+				attackCount++;
+				isAtLeastOneTargetInBattleRange = true;
+				if(effectSpreadRange>0){
+					if(effectSpritesByAttecked==null)
+						effectSpritesByAttecked = new ArrayList<EffectSprite>();
+					effectSpritesByAttecked.add(effectSprite);
+				}
+				if(attackTargeCounttMaxLimit!=UNLIMIT_ATTACK_TARGET_COUNT && attackTargeCounttMaxLimit >= attackCount)
+					break;
 			}
 		}
+		
+		checkIfInEffectSpreadRangeThenSpread(battleables, effectSpritesByAttecked);
+	}
+	
+	protected void checkIfInEffectSpreadRangeThenSpread(List<EffectSprite> battleables, List<EffectSprite> effectSpritesByAttecked) {
+		if(effectSpreadRange>0 && effectSpritesByAttecked!=null){
+			for(EffectSprite effectSpriteByAttecked : effectSpritesByAttecked){
+				SpriteDetectAreaHandler spriteDetectAreaHandler = new SpriteDetectAreaHandler();
+				spriteDetectAreaHandler.addSuccessorDetectArea(new DetectAreaRound(new PointF(effectSpriteByAttecked.getCenterX(), effectSpriteByAttecked.getCenterY()), effectSpreadRange));
+				spriteDetectAreaHandler.apply();
+				for(EffectSprite effectSprite : battleables){
+					if(effectSprite!=effectSpriteByAttecked && spriteDetectAreaHandler.detectByPoint(new PointF(effectSprite.getCenterX(), effectSprite.getCenterY()))){
+						for(IEffect effect : effects){
+							effectSprite.getAttributeInfo().addToEffectStatusList(effect.cloneEffect());
+						}
+					}
+				}
+			}
+		}
+	}
+	
+	protected boolean isInBattleRange(EffectSprite effectSprite) {
+		return getSpriteDetectAreaHandler().detectByPoint(new PointF(effectSprite.getCenterX(), effectSprite.getCenterY()));
+	}
+
+	public int getAttackTargeCounttMaxLimit() {
+		return attackTargeCounttMaxLimit;
+	}
+
+	public void setAttackTargeCounttMaxLimit(int attackTargeCounttMaxLimit) {
+		this.attackTargeCounttMaxLimit = attackTargeCounttMaxLimit;
 	}
 
 	public boolean isBattleable(){
@@ -104,7 +157,23 @@ public class EffectSprite extends Sprite implements IEffectable{
 		// TODO Auto-generated method stub
 		this.battleRange = battleRange;
 	}
+	
+	public float getEffectSpreadRange() {
+		return effectSpreadRange;
+	}
 
+	public void setEffectSpreadRange(float effectSpreadRange) {
+		this.effectSpreadRange = effectSpreadRange;
+	}
+
+	public void setBattleRange(DetectArea detectArea){
+		
+	}
+	
+	public void setBattleRange(SpriteDetectAreaHandler spriteDetectAreaHandler){
+		setSpriteDetectAreaHandler(spriteDetectAreaHandler);
+	}
+	
 	@Override
 	public AttributeInfo getNewAttributeInfo(AttributeInfo attributeInfo) {
 		// TODO Auto-generated method stub

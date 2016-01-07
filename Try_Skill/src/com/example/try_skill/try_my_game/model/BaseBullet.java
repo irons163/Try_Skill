@@ -29,19 +29,5 @@ public class BaseBullet extends WeapenSprite{
 		
 		super.attack(battleable);
 	}
-
-//	@Override
-//	public boolean checkIfInBattleRangeThenAttack(
-//			List<IEffectable> battleables) {
-//		boolean isInBattleRange = false;
-//		for(IEffectable battleableSprite : battleables){
-//			isInBattleRange = isInBattleRange(battleableSprite);
-//			if(isInBattleRange){
-//				attack(battleableSprite);
-//				break;
-//			}	
-//		}
-//		return isInBattleRange;
-//	}
 	
 }

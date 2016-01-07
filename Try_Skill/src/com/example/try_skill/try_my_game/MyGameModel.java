@@ -18,6 +18,7 @@ import com.example.try_skill.try_my_game.model.Defener;
 import com.example.try_skill.try_my_game.model.DefenerBuilder;
 import com.example.try_skill.try_my_game.model.Zombe;
 import com.example.try_skill.try_my_game.model.ZombeBuilder;
+import com.example.try_skill.try_my_game.model.Defener.AttackType;
 import com.example.try_skill.util.MapTileObject;
 import com.example.try_skill.util.MapTileUtil;
 
@@ -65,7 +66,7 @@ public class MyGameModel extends GameModel{
 		super(context, data);
 		// TODO Auto-generated constructor stub
 	
-		player = new Defener(100, 100, false);
+		player = new Defener(100, 100, false, AttackType.Shoot);
 		player.setPosition(500, 1000);
 		
 //		bullets = new Bullets(context, 100, 100, false, 0);
