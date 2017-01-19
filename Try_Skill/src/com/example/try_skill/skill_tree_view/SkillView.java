@@ -77,12 +77,6 @@ public class SkillView extends ButtonLayer{
 	}
 	
 	@Override
-	public boolean onTouch(MotionEvent event) {
-		// TODO Auto-generated method stub
-		return super.onTouch(event);
-	}
-	
-	@Override
 	protected void onTouched(MotionEvent event) {
 		// TODO Auto-generated method stub
 		super.onTouched(event);

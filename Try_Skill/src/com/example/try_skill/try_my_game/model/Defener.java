@@ -33,8 +33,11 @@ public class Defener extends EffectSprite{
 	int hamsterInjureCounter;
 	boolean isInvincible = false;
 	
-	private EffectSprite weapenSprite;
+	protected EffectSprite weapenSprite;
 	private AttackType attackType;
+	
+	protected List<IEffect> effectsForAllies = new ArrayList<IEffect>(); // for allies effects.
+	protected List<IEffect> effectsForEnemy = new ArrayList<IEffect>(); // for enemy effects.
 	
 	public enum AttackType {
 
@@ -67,8 +70,17 @@ public class Defener extends EffectSprite{
 		super(x, y, autoAdd);
 		this.attackType = attackType;
 		
+		initAttribute();
+		initDefaultBitmap();
+		initDefaultAction();
+		initCollisiontRectF();
+	}
+	
+	protected void initDefaultBitmap(){
 		setBitmapAndFrameWH(BitmapUtil.hamster, BitmapUtil.hamster.getWidth()/7, BitmapUtil.hamster.getHeight()/2);
-		
+	}
+	
+	protected void initDefaultAction(){	
 		addActionFPSFrame(attackType.getName(), attackType.getSequence(), BattleUtil.changeToNew(new int[]{0,5,5,5}, getAttributeInfo().getBattleInviable()), true, new IActionListener() {
 			
 			@Override
@@ -90,8 +102,6 @@ public class Defener extends EffectSprite{
 		});
 		
 		setAction(attackType.getName());
-		
-		initCollisiontRectF();
 	}
 	
 	private void initCollisiontRectF(){
@@ -105,7 +115,7 @@ public class Defener extends EffectSprite{
 		setCollisionRectF(getX()+collisionOffsetX, getY()+collisionOffsetY, getX()+collisionOffsetX+collisionWidth, getY()+collisionOffsetY+collisionHitght);
 	}
 	
-	private void initAttribute(){
+	protected void initAttribute(){
 		attribute = new Attribute();
 		float interval = new BigDecimal(1.0f/1.0f)
         .setScale(2, BigDecimal.ROUND_HALF_UP)
@@ -156,13 +166,31 @@ public class Defener extends EffectSprite{
 		setAction(attackType.getName());
 	}
 	
+	public boolean checkEnemyIfInBattleRangeThenAttack(List<EffectSprite> battleables){
+		effects = effectsForEnemy;
+		return checkIfInBattleRangeThenAttack(battleables);
+	}
+	
+	public boolean checkAlliesIfInBattleRangeThenAttack(List<EffectSprite> battleables){
+		effects = effectsForAllies;
+		return checkIfInBattleRangeThenAttack(battleables);
+	}
+	
 	@Override
-	public void checkIfInBattleRangeThenAttack(List<EffectSprite> battleables){
+	public boolean checkIfInBattleRangeThenAttack(List<EffectSprite> battleables){
 		if(weapenSprite==null){
-			super.checkIfInBattleRangeThenAttack(battleables);
+			return super.checkIfInBattleRangeThenAttack(battleables);
 		}else{
-			weapenSprite.checkIfInBattleRangeThenAttack(battleables);
+			return weapenSprite.checkIfInBattleRangeThenAttack(battleables);
 		}	
+	}
+	
+	@Override
+	public void updateSpriteDetectAreaCenter(PointF center) {
+		// TODO Auto-generated method stub
+		super.updateSpriteDetectAreaCenter(center);
+		if(weapenSprite!=null)
+			weapenSprite.updateSpriteDetectAreaCenter(center);
 	}
 	
 	@Override
@@ -238,6 +266,31 @@ public class Defener extends EffectSprite{
 	
 	public void setWeapen(WeapenSprite weapen){
 		this.weapenSprite = weapen;
+	}
+	
+	@Override
+	public void addEffect(IEffect effect) {
+		// TODO Auto-generated method stub
+		effects = effectsForEnemy;
+		super.addEffect(effect);
+	}
+	
+	@Override
+	public void addEffects(List<IEffect> effects) {
+		// TODO Auto-generated method stub
+		effects = effectsForEnemy;
+		super.addEffects(effects);
+	}
+	
+	public void addEffectForAllies(IEffect effect){
+		effects = effectsForAllies;
+		super.addEffect(effect);
+	}
+	
+	public void addEffectsForAllies(List<IEffect> effects) {
+		// TODO Auto-generated method stub
+		effects = effectsForAllies;
+		super.addEffects(effects);
 	}
 	
 //	@Override

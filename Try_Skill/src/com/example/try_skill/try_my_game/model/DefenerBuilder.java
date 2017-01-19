@@ -64,7 +64,7 @@ public class DefenerBuilder {
 		final Defener defener = new Defener(x, y, true, AttackType.Melee);
 		
 		final WeapenSprite meleeWeapen = new WeapenSprite(x, y, false, 0);
-		meleeWeapen.setBattleRange(defener.getSpriteDetectAreaHandler());
+		meleeWeapen.setBattleRange(defener.getEffectRangeDetectAreaHandler());
 		meleeWeapen.setAttackTargeCounttMaxLimit(WeapenSprite.UNLIMIT_ATTACK_TARGET_COUNT);
 		meleeWeapen.addEffect(new FireEffect());
 
@@ -134,7 +134,7 @@ public class DefenerBuilder {
 //		shooterWeapen.setBulletEnum(BulletEnum.RangeNormalBullets);
 //		meleeWeapen.setBattleRange(WeapenSprite.NO_ATK_RANGE);
 		meleeWeapen.addEffect(new NormalEffect(20));
-		meleeWeapen.setBattleRange(defener.getSpriteDetectAreaHandler());
+		meleeWeapen.setBattleRange(defener.getEffectRangeDetectAreaHandler());
 		
 		defener.setWeapen(meleeWeapen);
 		return defener;

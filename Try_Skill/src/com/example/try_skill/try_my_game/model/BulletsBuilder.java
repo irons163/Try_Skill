@@ -65,8 +65,8 @@ public class BulletsBuilder {
 		return bullet;
 	}
 	
-	public static RangeBullets createRangeNormalBullets(Context context, float x, float y){
-		RangeBullets bullet = new RangeBullets(context, x, y, false, 0);
+	public static Bullets createRangeNormalBullets(Context context, float x, float y){
+		Bullets bullet = new Bullets(context, x, y, false, 0);
 //		bullet.setPosition(bullet.getX(), bullet.getY());
 		bullet.setType(0);
 		bullet.addEffect(new NormalEffect(5));

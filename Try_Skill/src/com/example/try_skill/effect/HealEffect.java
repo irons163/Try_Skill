@@ -3,14 +3,15 @@ package com.example.try_skill.effect;
 import java.math.BigDecimal;
 
 import com.example.try_skill.center_notification.NSANotification;
+import com.example.try_skill.effect.IEffect.InjureType;
 
-public class NormalEffect extends BaseEffect{
-	private float dmg;
+public class HealEffect extends BaseEffect{
+	private float healValue;
 	
-	public NormalEffect(float dmg) {
+	public HealEffect(float healValue) {
 		// TODO Auto-generated constructor stub
-		injureType = InjureType.Normal;
-		this.dmg = dmg;
+		injureType = InjureType.Heal;
+		this.healValue = healValue;
 		init();
 	}
 	
@@ -27,13 +28,13 @@ public class NormalEffect extends BaseEffect{
 	public void doEffect(IEffectable effectable) {
 		// TODO Auto-generated method stub
 		super.doEffect(effectable);
-		effectable.getAttributeInfo().setHp((effectable.getAttributeInfo().getHp()-dmg));
+		effectable.getAttributeInfo().setHp((effectable.getAttributeInfo().getHp()+healValue));
 	}
 	
 	@Override
 	public IEffect cloneEffect() {
 		// TODO Auto-generated method stub
-		IEffect effect = new NormalEffect(dmg);
+		IEffect effect = new HealEffect(healValue);
 		effect.setEffectListener(effectListener);
 		
 		if(getChild()!=null)
@@ -48,5 +49,4 @@ public class NormalEffect extends BaseEffect{
 			this.effectListener.didEffect(this);
 		}
 	}
-
 }

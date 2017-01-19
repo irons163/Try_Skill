@@ -34,7 +34,7 @@ public class MainActivity extends Stage {
 	@Override
 	public SceneManager initSceneManager() {
 		// TODO Auto-generated method stub
-		LayerManager.setLayerBySenceIndex(0);
+//		LayerManager.getInstance().setLayerBySenceIndex(0);
 		SceneManager sceneManager = new SceneManager();
 		sceneManager.addScene(new MyScence(this, "game"));
 		sceneManager.startScene(0);

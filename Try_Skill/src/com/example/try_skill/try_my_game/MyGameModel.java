@@ -16,12 +16,12 @@ import com.example.try_skill.effect.EffectSprite;
 import com.example.try_skill.effect.IEffectable;
 import com.example.try_skill.try_my_game.model.Defener;
 import com.example.try_skill.try_my_game.model.DefenerBuilder;
+import com.example.try_skill.try_my_game.model.Summerize;
 import com.example.try_skill.try_my_game.model.Zombe;
 import com.example.try_skill.try_my_game.model.ZombeBuilder;
 import com.example.try_skill.try_my_game.model.Defener.AttackType;
 import com.example.try_skill.util.MapTileObject;
 import com.example.try_skill.util.MapTileUtil;
-
 
 public class MyGameModel extends GameModel{
 	public Defener player;
@@ -58,9 +58,9 @@ public class MyGameModel extends GameModel{
 	
 	private ZombeBuilder zombeBuilder;
 	
-//	BattleableSprite warrior;
-//	
-//	BattleableSprite medic;
+	EffectSprite warrior;
+	EffectSprite musketeer;
+	EffectSprite medic;
 	
 	public MyGameModel(Context context, Data data) {
 		super(context, data);
@@ -82,9 +82,11 @@ public class MyGameModel extends GameModel{
 		
 		zombeBuilder = new ZombeBuilder();
 		
-//		warrior = (BattleableSprite) Summerize.summerize2(context, 500, 500, 0);
-//		
-//		medic = (BattleableSprite) Summerize.summerize3(context, 200, 500, 0);
+//		warrior = (EffectSprite) Summerize.summerize(context, 500, 500, 0);
+		musketeer = (EffectSprite) Summerize.summerize2(context, 400, 500, 0);
+		
+		
+		medic = (EffectSprite) Summerize.summerize3(context, 200, 500, 0);
 //		
 //		fighters.add(warrior);
 //		fighters.add(medic);
@@ -185,14 +187,14 @@ public class MyGameModel extends GameModel{
 		}
 		
 //		warrior.frameTrig();
-//		
-//		medic.frameTrig();
+		musketeer.frameTrig();
+		medic.frameTrig();
 //		
 //		mapTileUtil.frameTrig();
 //		
 //		warrior.checkIfInBattleRangeThenAttack(zombes);
-//		
-//		medic.checkIfInBattleRangeThenAttack(fighters, zombes);
+		musketeer.checkIfInBattleRangeThenAttack(zombes);
+		medic.checkIfInBattleRangeThenAttack(zombes);
 		
 		checkMapDefenerInBattle();
 		
@@ -223,15 +225,15 @@ public class MyGameModel extends GameModel{
 		
 		mapTileUtil.drawSelf(canvas, null);
 		
-		LayerManager.drawLayers(canvas, null);
+		LayerManager.getInstance().drawLayers(canvas, null);
 		
 		for(IEffectable zombe : zombes){
 			((Sprite)zombe).drawSelf(canvas, null);
 		}
 		
 //		warrior.drawSelf(canvas, null);
-//		
-//		medic.drawSelf(canvas, null);
+		musketeer.drawSelf(canvas, null);
+		medic.drawSelf(canvas, null);
 	}
 	
 	public int getBallLevel() {

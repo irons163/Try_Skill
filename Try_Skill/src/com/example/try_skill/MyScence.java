@@ -127,19 +127,19 @@ public class MyScence extends EasyScene{
 	@Override
 	public void doDraw(Canvas canvas) {
 		// TODO Auto-generated method stub
-		LayerManager.drawLayers(canvas, null);
+		LayerManager.getInstance().drawLayers(canvas, null);
 	}
 
-	@Override
-	public boolean onTouchEvent(MotionEvent event) {
-		// TODO Auto-generated method stub
-//		if(!showSkillTreeViewButton.onTouchEvent(event))
-//		skillTreeView.onTouchEvent(event);
-		
-		LayerManager.onTouchLayers(event);
-		
-		return true;
-	}
+//	@Override
+//	public boolean onTouchEvent(MotionEvent event) {
+//		// TODO Auto-generated method stub
+////		if(!showSkillTreeViewButton.onTouchEvent(event))
+////		skillTreeView.onTouchEvent(event);
+//		
+//		LayerManager.onTouchLayers(event);
+//		
+//		return true;
+//	}
 	
 	@Override
 	public void beforeGameStart() {

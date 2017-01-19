@@ -40,7 +40,7 @@ public class RangeBullets extends Bullets{
 		}
 		this.context = context;
 		initCollisiontRectF();
-		initMove();
+//		initMove();
 	}
 	
 	private void initCollisiontRectF(){
@@ -54,71 +54,4 @@ public class RangeBullets extends Bullets{
 		setCollisionRectF(getX()+collisionOffsetX, getY()+collisionOffsetY, getX()+collisionOffsetX+collisionWidth, getY()+collisionOffsetY+collisionHitght);
 	}
 
-	private void initMove() {		
-		movementActionShoot = new MovementActionSetWithThreadPool();
-		movementActionShoot.setMovementActionController(new MovementAtionController());
-		MovementActionInfo info = new MovementActionInfo(2000, 1, 2, 0, "", null, false);
-		MovementActionItemBaseReugularFPS reFlectaction = new MovementActionItemBaseReugularFPS(info);
-		movementActionShoot.addMovementAction(reFlectaction);
-		
-		movementActionShoot.setTimerOnTickListener(new MovementAction.TimerOnTickListener() {
-			
-			@Override
-			public void onTick(float dx, float dy) {
-				// TODO Auto-generated method stub
-				
-
-				
-				move(dx, dy);
-				
-//				scriptPaser.nextScriptLine();
-
-				
-//				scriptPaser.triggerAndDoCommandInSprite();
-				
-			}
-		});
-		
-		movementActionShoot.initMovementAction();
-		
-		movementActionShoot.start();
-		
-		setMovementAction(movementActionShoot);
-
-	}
-
-//	@Override
-//	public boolean checkIfInBattleRangeThenAttack(
-//			List<IEffectable> battleables) {
-//		// TODO Auto-generated method stub
-//		boolean isInBattleRange = false;
-//		for(IEffectable battleableSprite : battleables){
-//			isInBattleRange = isInBattleRange(battleableSprite);
-//			if(isInBattleRange){	
-//				break;
-//			}	
-//		}
-//		
-//		if(isInBattleRange)
-//			checkIfInAreaOfEffectRangeThenAttackByAOE(battleables);
-//		
-//		return isInBattleRange;
-//	}
-	
-	private void checkIfInAreaOfEffectRangeThenAttackByAOE(List<IEffectable> battleables){
-		for(IEffectable battleableSprite : battleables){
-			if(isInAreaOfEffectRange(battleableSprite))
-				attack(battleableSprite);
-		}
-	}
-	
-	private boolean isInAreaOfEffectRange(IEffectable battleable) {
-		// TODO Auto-generated method stub
-//		double distance = Math.pow(getCenterX() - battleable.getCenterX(), 2) + Math.pow(getCenterY() - battleable.getCenterY(), 2);
-//		distance = Math.sqrt(distance);
-//		if(distance <= AOERange){
-//			return true;
-//		}
-		return false;
-	}
 }

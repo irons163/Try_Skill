@@ -86,14 +86,17 @@ public class ShooterWeapen extends WeapenSprite{
 	}
 	
 	@Override
-	public void checkIfInBattleRangeThenAttack(
+	public boolean checkIfInBattleRangeThenAttack(
 			List<EffectSprite> battleables) {
 		// TODO Auto-generated method stub
 		super.checkIfInBattleRangeThenAttack(battleables);
 		
+		boolean isAtLeastOneTargetInBattleRange = false;
 		for(BaseBullet bullets : bulletsList){
-			bullets.checkIfInBattleRangeThenAttack(battleables);
+			isAtLeastOneTargetInBattleRange = isAtLeastOneTargetInBattleRange||bullets.checkIfInBattleRangeThenAttack(battleables);
 		}
+		
+		return isAtLeastOneTargetInBattleRange;
 	}
 	
 	@Override

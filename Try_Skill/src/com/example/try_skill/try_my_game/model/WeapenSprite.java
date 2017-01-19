@@ -49,6 +49,13 @@ public class WeapenSprite extends EffectSprite{
 		attribute.setInterval(interval);
 		attributeHelper = new AttributeHelper(attribute);
 	}
+	
+	public void setInterval(float interval){
+		if(interval<0)
+			return;
+		
+		attribute.setInterval(interval);
+	}
 
 //	@Override
 //	public AttributeInfo getNewAttributeInfo(AttributeInfo attributeInfo) {
@@ -57,6 +64,19 @@ public class WeapenSprite extends EffectSprite{
 //		attributeInfoNew.setAtk(attributeInfoNew.getAtk()+5);
 //		return attributeInfoNew;
 //	}	
+	
+	@Override
+	protected void attack(IEffectable effectSprite) {
+		// TODO Auto-generated method stub
+		long currentTime = System.currentTimeMillis();
+		if (!attributeHelper.isCanShoot(lastShootTime, currentTime)) {
+			return;
+		}
+		
+		lastShootTime = currentTime;
+		
+		super.attack(effectSprite);
+	}
 	
 	public void addWeapenEffect(String key, IEffect effect){
 		effects.add(effect);

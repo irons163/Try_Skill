@@ -25,7 +25,7 @@ import com.example.try_skill.util.BitmapUtil;
 import com.example.try_skill.util.ColorFilterBuilder;
 
 
-public class Zombe extends EffectSprite{
+public class Zombe extends MoveableEffectSprite{
 	Attribute attribute;
 	public AttributeHelper attributeHelper;
 	long lastShootTime;
@@ -128,7 +128,8 @@ public class Zombe extends EffectSprite{
 				// TODO Auto-generated method stub
 				
 
-				
+				setMoveAngle((float) ((Math.atan2(dy, (-1) * dx) + Math.PI)
+						/ Math.PI * 180));
 				move(dx, dy);
 				
 //				scriptPaser.nextScriptLine();
@@ -342,6 +343,13 @@ public class Zombe extends EffectSprite{
 				paint = new Paint();
 			
 			paint.setColorFilter(ColorFilterBuilder.getEffectColor(InjureType.Normal));
+		}
+		
+		if(getAttributeInfo().checkHasEffectOrNotByEffectType(InjureType.Heal)){
+			if(paint==null)
+				paint = new Paint();
+			
+			paint.setColorFilter(ColorFilterBuilder.getEffectColor(InjureType.Heal));
 		}
 			
 		super.drawSelf(canvas, paint);

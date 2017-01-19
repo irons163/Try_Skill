@@ -8,6 +8,8 @@ import android.graphics.PointF;
 
 import com.example.try_gameengine.framework.Sprite;
 import com.example.try_gameengine.utils.DetectArea;
+import com.example.try_gameengine.utils.DetectAreaPoint;
+import com.example.try_gameengine.utils.DetectAreaRect;
 import com.example.try_gameengine.utils.DetectAreaRound;
 import com.example.try_gameengine.utils.SpriteDetectAreaHandler;
 
@@ -16,7 +18,7 @@ public class EffectSprite extends Sprite implements IEffectable{
 	private AttributeInfo attributeInfo;
 	protected boolean isNeedRemove = false;
 	protected boolean isBattleable = true;
-	protected float battleRange = 100f;
+	protected float battleRange = 0;
 	protected int attackTargeCounttMaxLimit = 1;
 //	protected boolean isSpreadEffect;
 	protected float effectSpreadRange;
@@ -24,28 +26,129 @@ public class EffectSprite extends Sprite implements IEffectable{
 	protected List<IEffect> effects = new ArrayList<IEffect>(); // main effects.
 	protected List<IEffect> spreadEffects = new ArrayList<IEffect>(); // spread effects, if size=0, use main effects for spread.
 	
+	protected DetectArea battleRangeDetectArea;
+	
+	protected SpriteDetectAreaHandler effectRangeDetectAreaHandler;
+	
+	protected BeAttackedRangeType beAttackedRangeType;
+	
+	protected DetectArea beAttackedRangeDetectArea;
+	protected float beAttackedRange;
+	
 	public EffectSprite(Bitmap bitmap, int w, int h, boolean autoAdd) {
 		super(bitmap, w, h, autoAdd);
 		// TODO Auto-generated constructor stub
-		initDefaultValue();
+		initDefaultAttributeInfo();
+		initDefaultBattleRange();
+		initDefaultBeAttackedRange();
 	}
 
 	public EffectSprite(float x, float y, boolean autoAdd) {
 		// TODO Auto-generated constructor stub
 		super(x, y, autoAdd);
-		initDefaultValue();
+		initDefaultAttributeInfo();
+		initDefaultBattleRange();
+		initDefaultBeAttackedRange();
 	}
 	
-	private void initDefaultValue(){
+	protected void initDefaultAttributeInfo(){
 		attributeInfo = new AttributeInfo();
 		attributeInfo.setAtk(10);
 		attributeInfo.setDef(5);
-		attributeInfo.setHp(20);
+		attributeInfo.setHp(20);	
+	}
+	
+	protected void initDefaultBattleRange(){
+		setBattleRange(battleRange);
+	}
+	
+	protected void initDefaultBeAttackedRange(){
+		setBeAttackedRangeType(BeAttackedRangeType.RangeBySelfCenterPoint);
+	}
+	
+	public enum BeAttackedRangeType{
+		RangeBySelfCenterPoint, RangeBySelfCollisiontRectF, RangeBySelfFrame, RangeBySelfBeAttackedRange,
+		RangeByParentCenterPoint, RangeByParentCollisiontRectF, RangeByParentFrame, RangeByParentBeAttackedRange
+	}
+	
+	public void setBeAttackedRangeType(BeAttackedRangeType beAttackedRangeType){
+		this.beAttackedRangeType = beAttackedRangeType;
+		switch (beAttackedRangeType) {
+		case RangeBySelfCenterPoint:
+			beAttackedRangeDetectArea = new DetectAreaPoint(new PointF(getCenterX(), getCenterY()));
+			break;
+		case RangeBySelfCollisiontRectF:
+			beAttackedRangeDetectArea = new DetectAreaRect(getCollisionRectF());
+			break;
+		case RangeBySelfFrame:
+			beAttackedRangeDetectArea = new DetectAreaRect(getFrame());
+			break;
+		case RangeBySelfBeAttackedRange:
+			if(beAttackedRange>0)
+				beAttackedRangeDetectArea = new DetectAreaRound(new PointF(getCenterX(), getCenterY()), beAttackedRange);
+			else
+				beAttackedRangeDetectArea = new DetectAreaPoint(new PointF(getCenterX(), getCenterY()));
+			break;
+		case RangeByParentCenterPoint:
+			
+			break;
+		case RangeByParentCollisiontRectF:
+//			beAttackedRangeDetectArea = new DetectAreaRect(getCollisionRectF());
+			break;
+		case RangeByParentFrame:
+			
+			break;
+		case RangeByParentBeAttackedRange:
+			
+			break;
+		}
 		
-		SpriteDetectAreaHandler spriteDetectAreaHandler = new SpriteDetectAreaHandler();
-		spriteDetectAreaHandler.addSuccessorDetectArea(new DetectAreaRound(new PointF(getCenterX(), getCenterY()), 100));
-		spriteDetectAreaHandler.apply();
-		setSpriteDetectAreaHandler(spriteDetectAreaHandler);
+	}
+	
+	public void setBeAttackedRangeWithDetectArea(DetectArea detectArea){
+		beAttackedRange = 0;
+		beAttackedRangeDetectArea = detectArea;
+		this.beAttackedRangeType = BeAttackedRangeType.RangeBySelfBeAttackedRange;
+	}
+	
+	public void setBeAttackedRange(float beAttackedRange){
+		if(this.beAttackedRange==beAttackedRange)
+			return;
+		this.beAttackedRange = beAttackedRange;
+		setBeAttackedRangeType(BeAttackedRangeType.RangeBySelfBeAttackedRange);
+	}
+	
+	public DetectArea getBeAttackedRangeWithDetectArea(){
+		return beAttackedRangeDetectArea;
+	}
+	
+	public float getBeAttackedRange(){
+		return beAttackedRange;
+	}
+	
+	@Override
+	public void updateSpriteDetectAreaCenter(PointF center) {
+		// TODO Auto-generated method stub
+		if(beAttackedRangeDetectArea!=null){
+			if(beAttackedRangeType==BeAttackedRangeType.RangeBySelfCenterPoint){
+				beAttackedRangeDetectArea.setCenter(center);
+			}else if(beAttackedRangeType==BeAttackedRangeType.RangeBySelfBeAttackedRange){
+				beAttackedRangeDetectArea.setCenter(center);
+			}else if(beAttackedRangeType==BeAttackedRangeType.RangeBySelfBeAttackedRange){
+				beAttackedRangeDetectArea.setCenter(center);
+			}
+		}
+			
+		
+		if(effectRangeDetectAreaHandler!=null)
+			effectRangeDetectAreaHandler.updateSpriteDetectAreaCenter(center);
+		
+		super.updateSpriteDetectAreaCenter(center);
+	}
+	
+	public SpriteDetectAreaHandler getEffectRangeDetectAreaHandler() {
+		// TODO Auto-generated method stub
+		return effectRangeDetectAreaHandler;
 	}
 	
 	public void addEffect(IEffect effect){
@@ -84,7 +187,7 @@ public class EffectSprite extends Sprite implements IEffectable{
 		}
 	}
 	
-	public void checkIfInBattleRangeThenAttack(List<EffectSprite> battleables){
+	public boolean checkIfInBattleRangeThenAttack(List<EffectSprite> battleables){
 		List<EffectSprite> effectSpritesByAttecked = null;
 		boolean isAtLeastOneTargetInBattleRange = false;
 		int attackCount = 0;
@@ -104,6 +207,8 @@ public class EffectSprite extends Sprite implements IEffectable{
 		}
 		
 		checkIfInEffectSpreadRangeThenSpread(battleables, effectSpritesByAttecked);
+		
+		return isAtLeastOneTargetInBattleRange;
 	}
 	
 	protected void checkIfInEffectSpreadRangeThenSpread(List<EffectSprite> battleables, List<EffectSprite> effectSpritesByAttecked) {
@@ -124,7 +229,8 @@ public class EffectSprite extends Sprite implements IEffectable{
 	}
 	
 	protected boolean isInBattleRange(EffectSprite effectSprite) {
-		return getSpriteDetectAreaHandler().detectByPoint(new PointF(effectSprite.getCenterX(), effectSprite.getCenterY()));
+//		return effectRangeDetectAreaHandler.detectByPoint(new PointF(effectSprite.getCenterX(), effectSprite.getCenterY()));
+		return effectRangeDetectAreaHandler.detectByDetectArea(effectSprite.getBeAttackedRangeWithDetectArea());
 	}
 
 	public int getAttackTargeCounttMaxLimit() {
@@ -156,9 +262,24 @@ public class EffectSprite extends Sprite implements IEffectable{
 	public void setBattleRange(float battleRange) {
 		// TODO Auto-generated method stub
 		this.battleRange = battleRange;
-		getSpriteDetectAreaHandler().reset();
-		getSpriteDetectAreaHandler().addSuccessorDetectArea(new DetectAreaRound(new PointF(getCenterX(), getCenterY()), battleRange));
-		getSpriteDetectAreaHandler().apply();
+		DetectArea detectArea;
+		if(battleRange>0){
+			detectArea = new DetectAreaRound(new PointF(getCenterX(), getCenterY()), battleRange);
+		}else if(isCollisionRectFEnable() && getCollisionRectF()!=null){
+			detectArea = new DetectAreaRect(getCollisionRectF());
+		}else{
+			detectArea = new DetectAreaRect(getFrame());
+		}
+		
+		if(effectRangeDetectAreaHandler==null){
+			effectRangeDetectAreaHandler = new SpriteDetectAreaHandler();
+			effectRangeDetectAreaHandler.addSuccessorDetectArea(detectArea);
+//			setSpriteDetectAreaHandler(effectRangeDetectAreaHandler);
+		}else{
+			effectRangeDetectAreaHandler.replaceDetectArea(battleRangeDetectArea, detectArea);
+		}
+		effectRangeDetectAreaHandler.apply();
+		battleRangeDetectArea = detectArea;
 	}
 	
 	public float getEffectSpreadRange() {
@@ -174,7 +295,8 @@ public class EffectSprite extends Sprite implements IEffectable{
 	}
 	
 	public void setBattleRange(SpriteDetectAreaHandler spriteDetectAreaHandler){
-		setSpriteDetectAreaHandler(spriteDetectAreaHandler);
+//		setSpriteDetectAreaHandler(spriteDetectAreaHandler);
+		effectRangeDetectAreaHandler = spriteDetectAreaHandler;
 	}
 	
 	@Override

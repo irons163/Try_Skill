@@ -191,11 +191,7 @@ class BTree {
 			for(Entry<Double, Sprite> sprite : spriteSortByDistance.entrySet()){
 				update(skillSprite, sprite, null);
 			}
-//		}
-				
-			
-
-			
+//		}	
 			class SkillSelectorTask extends SelectorTask {
 				private final SkillWithArea skillWithArea;
 				
