@@ -5,9 +5,11 @@ import java.util.concurrent.CopyOnWriteArrayList;
 
 import android.content.Context;
 import android.graphics.Canvas;
+import android.graphics.Matrix;
 import android.util.Log;
 import android.view.MotionEvent;
 
+import com.example.try_gameengine.Camera.Camera;
 import com.example.try_gameengine.framework.Data;
 import com.example.try_gameengine.framework.GameModel;
 import com.example.try_gameengine.framework.LayerManager;
@@ -20,6 +22,7 @@ import com.example.try_skill.try_my_game.model.Summerize;
 import com.example.try_skill.try_my_game.model.Zombe;
 import com.example.try_skill.try_my_game.model.ZombeBuilder;
 import com.example.try_skill.try_my_game.model.Defener.AttackType;
+import com.example.try_skill.util.CommonUtil;
 import com.example.try_skill.util.MapTileObject;
 import com.example.try_skill.util.MapTileUtil;
 
@@ -65,6 +68,22 @@ public class MyGameModel extends GameModel{
 	public MyGameModel(Context context, Data data) {
 		super(context, data);
 		// TODO Auto-generated constructor stub
+		
+		Camera camera = null;
+		if(camera==null){
+			camera = new Camera(0, 0, 1760, 980);
+			setCamera(camera);
+			getCamera().enableClearViewNextTime();
+		}
+//		getCamera().translate(1500, 1500);
+//		getCamera().setCameraTranslateBeforeApply(0, 0);
+//		getCamera().zoom(-1.0f);
+//		getCamera().rotation(-35); //viewport, touchrange, spinner,edittext,save    
+		getCamera().setViewPort(0, 0, CommonUtil.screenWidth, CommonUtil.screenHeight);
+//		getCamera().getViewPort().setRotation(45);
+		getCamera().getViewPortRectF();
+		
+		getCamera().applyCameraSpaceToViewPort();
 	
 		player = new Defener(100, 100, false, AttackType.Shoot);
 		player.setPosition(500, 1000);
@@ -109,6 +128,15 @@ public class MyGameModel extends GameModel{
 			if ((event.getAction() & MotionEvent.ACTION_MASK) % 5 == MotionEvent.ACTION_DOWN) {
 				x = event.getX(pointerId);
 				y = event.getY(pointerId);
+				
+				float a[] = new float[]{x, y};
+				Matrix matrix = new Matrix(getCamera().getMatrix());
+				matrix.invert(matrix);
+				matrix.mapPoints(a);
+				
+				x = a[0];
+				y = a[1];
+				
 					stickMovePointIndex = pointerId;
 					bStickTouched = true;
 					

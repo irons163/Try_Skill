@@ -250,6 +250,7 @@ public static Bitmap bar;
 		
 		bullet = BitmapFactory.decodeResource(context.getResources(), R.drawable.bullet);	
 		bullet01 = BitmapFactory.decodeResource(context.getResources(), R.drawable.bullet01);
+		bullet01 = createBitmap(bullet01, 3);
 		bullet_peanut = BitmapFactory.decodeResource(context.getResources(), R.drawable.bullet_peanut);
 		
 		hamster = BitmapFactory.decodeResource(context.getResources(), R.drawable.hamster);

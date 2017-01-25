@@ -8,7 +8,7 @@ import com.example.try_gameengine.scene.Scene;
 
 public class GameScene extends Scene{
 	
-	MyGameModel gameModel;
+//	MyGameModel gameModel;
 	
 	public GameScene(Context context, String id, int level, int mode) {
 		super(context, id, level, mode);

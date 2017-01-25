@@ -16,22 +16,24 @@
         android:largeHeap="true"
         android:icon="@drawable/ic_launcher"
         android:label="@string/app_name"
-        android:theme="@style/AppTheme" >
+        android:theme="@android:style/Theme.NoTitleBar" >
+        <!-- -->
         <activity
             android:name=".MainActivity"
             android:label="@string/app_name" >
+			<intent-filter>
+                <action android:name="android.intent.action.MAIN" />
 
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
         </activity>
+        
         
         <activity
             android:name="com.example.try_skill.try_my_game.MainActivity"
             android:screenOrientation="landscape"
             android:label="@string/app_name" >
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
+            
         </activity>
         
         <uses-library android:name="android.test.runner" />

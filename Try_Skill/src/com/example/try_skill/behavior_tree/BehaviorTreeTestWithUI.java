@@ -144,6 +144,9 @@ public class BehaviorTreeTestWithUI extends ActivityUnitTestCase<MyActivity>{
 //			
 //			activity.getSurfaceView().getHolder().unlockCanvasAndPost(canvas);
 			
+			sprite.frameTrig();
+			sprite2.frameTrig();
+			
 			switch (i) {
 			case 0:
 				assertEquals(true, sprite.getX() == 12 && sprite.getY() == 12);

@@ -40,8 +40,11 @@ public class MyScence extends EasyScene{
 		Sprite sprite2 = new Sprite(20, 20, true);
 		sprite2.setBitmapAndAutoChangeWH(BitmapUtil.bluePoint);
 		
-		MovementAction move = MAction.moveTo(20, 20, 1, 10);
-		MovementAction move2 = MAction.moveTo(30, 30, 1, 10);
+//		MovementAction move = MAction.moveTo(30, 30, 20, 2000);
+//		MovementAction move2 = MAction.moveTo(40, 40, 20, 2000);
+		
+		MovementAction move = MAction.moveTo(30, 30, 2000);
+		MovementAction move2 = MAction.moveTo(40, 40, 2000);
 		
 		sprite.runMovementAction(move);
 		sprite2.runMovementAction(move2);
@@ -115,12 +118,6 @@ public class MyScence extends EasyScene{
 			IGameModel gameModel) {
 		// TODO Auto-generated method stub
 		gameView = new GameView(activity, gameController, gameModel);
-		
-	}
-
-	@Override
-	public void process() {
-		// TODO Auto-generated method stub
 		
 	}
 

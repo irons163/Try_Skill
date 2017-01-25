@@ -39,14 +39,16 @@ public class MainActivity extends Stage {
 		
 		ColorFilterBuilder.init();
 
-		initStage();
-		
 		Config.enableFPSInterval = true;
 		Config.fps = 40;
 		Config.showFPS = false;
 		Config.destanceType = DestanceType.ScreenPersent;
 		Config.currentScreenWidth = CommonUtil.screenWidth;
 		Config.currentScreenHeight = CommonUtil.screenHeight;
+		
+		initStage();
+		
+
 	}
 
 	@Override
