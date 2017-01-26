@@ -27,7 +27,8 @@ public class MainActivity extends Stage {
 		CommonUtil.screenHeight -= CommonUtil.statusBarHeight;
 
 		BitmapUtil.initBitmap(this);
-
+		BitmapUtil.initBitmapForTest();
+		
 		initStage();
 	}
 

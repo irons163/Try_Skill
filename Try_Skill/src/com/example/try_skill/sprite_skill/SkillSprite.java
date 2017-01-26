@@ -1,43 +1,36 @@
 package com.example.try_skill.sprite_skill;
 
-import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.TreeMap;
 
 import android.graphics.Bitmap;
-import android.graphics.Point;
 import android.graphics.PointF;
 
 import com.example.try_gameengine.framework.Sprite;
 import com.example.try_gameengine.utils.DetectAreaPoint;
 import com.example.try_gameengine.utils.SpriteDetectAreaHandler;
-import com.example.try_skill.ASkill;
 import com.example.try_skill.ArmySprite;
-import com.example.try_skill.ISkill;
 import com.example.try_skill.behavior_tree.Behavior;
 import com.example.try_skill.behavior_tree.BehaviorTreeFactory;
-//import com.example.try_skill.behavior_tree.BevRunningStatus;
 import com.example.try_skill.behavior_tree.CompositeNode;
 import com.example.try_skill.behavior_tree.CompositeNode_Parallel;
 import com.example.try_skill.behavior_tree.CompositeNode_Selector;
 import com.example.try_skill.behavior_tree.CompositeNode_Sequence;
 import com.example.try_skill.behavior_tree.Node;
-import com.example.try_skill.behavior_tree.ReturnTureTaskForTest;
 import com.example.try_skill.behavior_tree.SelectorTask;
+import com.example.try_skill.behavior_tree.Task;
+import com.example.try_skill.behavior_tree.Task.BevRunningStatus;
 import com.example.try_skill.behavior_tree.TaskDecorator;
 import com.example.try_skill.behavior_tree.TaskResultInverseDecorator;
-//import com.example.try_skill.behavior_tree.PointInputForTest;
-//import com.example.try_skill.behavior_tree.PointOutputForTest;
-import com.example.try_skill.behavior_tree.Task;
 import com.example.try_skill.behavior_tree.TerminateNode;
-import com.example.try_skill.behavior_tree.Task.BevRunningStatus;
 import com.example.try_skill.effect.IEffect;
 import com.example.try_skill.sprite_skill.BTree.Input;
+//import com.example.try_skill.behavior_tree.BevRunningStatus;
+//import com.example.try_skill.behavior_tree.PointInputForTest;
+//import com.example.try_skill.behavior_tree.PointOutputForTest;
 
 public class SkillSprite extends Sprite{
 	private List<SkillWithArea> skillWithAreas = new ArrayList<SkillWithArea>();

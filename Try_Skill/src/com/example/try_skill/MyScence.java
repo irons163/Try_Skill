@@ -5,15 +5,18 @@ import java.util.List;
 
 import android.app.Activity;
 import android.content.Context;
-import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Point;
-import android.view.MotionEvent;
 import android.view.SurfaceHolder;
 
 import com.example.try_gameengine.action.MAction;
 import com.example.try_gameengine.action.MovementAction;
+import com.example.try_gameengine.extension_module.skill.ASkill;
+import com.example.try_gameengine.extension_module.skill.SkillA;
+import com.example.try_gameengine.extension_module.skill.SkillB;
+import com.example.try_gameengine.extension_module.skill.SkillC;
+import com.example.try_gameengine.extension_module.skill.SkillManager;
 import com.example.try_gameengine.framework.BitmapUtil;
 import com.example.try_gameengine.framework.ButtonLayer;
 import com.example.try_gameengine.framework.GameView;

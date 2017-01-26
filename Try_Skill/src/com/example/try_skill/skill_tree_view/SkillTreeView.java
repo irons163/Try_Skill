@@ -1,7 +1,6 @@
 package com.example.try_skill.skill_tree_view;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
 import java.util.Map.Entry;
 
@@ -11,13 +10,10 @@ import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Point;
 
+import com.example.try_gameengine.extension_module.skill.ASkill;
+import com.example.try_gameengine.extension_module.skill.SkillManager;
 import com.example.try_gameengine.framework.ButtonLayer;
-import com.example.try_gameengine.framework.LabelLayer;
 import com.example.try_gameengine.framework.Layer;
-import com.example.try_gameengine.framework.ALayer.LayerParam;
-import com.example.try_skill.ASkill;
-import com.example.try_skill.ISkill;
-import com.example.try_skill.SkillManager;
 
 public class SkillTreeView extends Layer{
 	//like backpackage

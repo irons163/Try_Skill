@@ -4,11 +4,10 @@ import android.graphics.Color;
 import android.graphics.Point;
 import android.view.MotionEvent;
 
+import com.example.try_gameengine.extension_module.skill.ASkill;
 import com.example.try_gameengine.framework.ButtonLayer;
 import com.example.try_gameengine.framework.ILayer;
 import com.example.try_gameengine.framework.LabelLayer;
-import com.example.try_skill.ASkill;
-import com.example.try_skill.SkillManager;
 
 public class SkillView extends ButtonLayer{
 	private ASkill skill;

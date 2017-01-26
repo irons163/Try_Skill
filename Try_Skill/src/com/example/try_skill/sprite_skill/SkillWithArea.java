@@ -2,8 +2,8 @@ package com.example.try_skill.sprite_skill;
 
 import android.graphics.PointF;
 
+import com.example.try_gameengine.extension_module.skill.ASkill;
 import com.example.try_gameengine.utils.DetectArea;
-import com.example.try_skill.ASkill;
 import com.example.try_skill.center_notification.NSANotificationCenter;
 import com.example.try_skill.effect.FrozenEffect;
 import com.example.try_skill.effect.IEffect;
